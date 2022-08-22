@@ -1,2 +1,3 @@
 export * from "./Navbar";
-export * from './CalendarEventBox';
+export * from "./CalendarEventBox";
+export * from "./CalendarModal";

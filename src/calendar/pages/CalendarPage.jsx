@@ -5,6 +5,7 @@ import { getMessages, calendarLocalizer } from "../../helpers";
 
 import { addHours } from "date-fns";
 import { useState } from "react";
+import { CalendarModal } from "../components/CalendarModal";
 
 const events = [
   {
@@ -41,6 +42,7 @@ export const CalendarPage = () => {
   const onSelect = (event) => {
     console.log({ Select: event });
   };
+
   const onChangeView = (event) => {
     localStorage.setItem("lastView", event);
     setLastView(event);
@@ -66,6 +68,7 @@ export const CalendarPage = () => {
         onSelectEvent={onSelect}
         onView={onChangeView}
       />
+      <CalendarModal />
     </>
   );
 };
