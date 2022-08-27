@@ -9,7 +9,7 @@ registerLocale("es", es);
 
 import "./modalStyle.css";
 import "react-datepicker/dist/react-datepicker.css";
-import { addHours, addMinutes } from "date-fns";
+import { addHours, addMinutes, differenceInSeconds } from "date-fns";
 
 const customStyles = {
   content: {
@@ -52,6 +52,18 @@ export const CalendarModal = () => {
     setIsOpen(false);
   };
 
+  const onSubmit = (event) => {
+    event.preventDefault();
+
+    const dateDifference = differenceInSeconds(formValues.end, formValues.start);
+
+    if(isNaN(dateDifference) || dateDifference<=0) return;
+
+    if(formValues.title.length<=0) return;
+
+    console.log(formValues);
+  };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -63,7 +75,7 @@ export const CalendarModal = () => {
     >
       <h1> Nuevo evento </h1>
       <hr />
-      <form className="container">
+      <form className="container" onSubmit={onSubmit}>
         <div className="form-group mb-2">
           <label>Fecha y hora inicio</label>
           <DatePicker
@@ -88,15 +100,11 @@ export const CalendarModal = () => {
             showTimeSelect
             locale="es"
             timeCaption="Hora"
-            minTime={
-              addMinutes(
-              formValues.start, 30)}
-            maxTime={
-              addMinutes(
-              addHours(
-              formValues.start,
-              23-formValues.start.getHours()
-            ), 30)}
+            minTime={addMinutes(formValues.start, 30)}
+            maxTime={addMinutes(
+              addHours(formValues.start, 23 - formValues.start.getHours()),
+              30
+            )}
           />
         </div>
 
