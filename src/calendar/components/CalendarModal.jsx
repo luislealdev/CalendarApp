@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import Modal from "react-modal";
 import DatePicker from "react-datepicker";
@@ -10,6 +10,8 @@ registerLocale("es", es);
 import "./modalStyle.css";
 import "react-datepicker/dist/react-datepicker.css";
 import { addHours, addMinutes, differenceInSeconds } from "date-fns";
+import Swal from "sweetalert2";
+import 'sweetalert2/dist/sweetalert2.min.css'
 
 const customStyles = {
   content: {
@@ -54,15 +56,28 @@ export const CalendarModal = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
+    setFormSubmited(true);
 
-    const dateDifference = differenceInSeconds(formValues.end, formValues.start);
+    const dateDifference = differenceInSeconds(
+      formValues.end,
+      formValues.start
+    );
 
-    if(isNaN(dateDifference) || dateDifference<=0) return;
+    if (isNaN(dateDifference) || dateDifference <= 0) {
+      Swal.fire("Fechas incorrectas", "Revise las fechas ingresadas", "error");
+      return;
+    }
 
-    if(formValues.title.length<=0) return;
-
-    console.log(formValues);
+    if (formValues.title.length <= 0) return;
   };
+
+  const [formSubmited, setFormSubmited] = useState(false);
+
+  const titleClass = useMemo(() => {
+    if (!formSubmited) return "";
+
+    return formValues.title.length > 0 ? "is-valid" : "is-invalid";
+  }, [formValues.title, formSubmited]);
 
   return (
     <Modal
@@ -113,7 +128,7 @@ export const CalendarModal = () => {
           <label>Titulo y notas</label>
           <input
             type="text"
-            className="form-control"
+            className={`form-control ${titleClass}`}
             placeholder="Título del evento"
             name="title"
             autoComplete="off"
