@@ -29,7 +29,7 @@ Modal.setAppElement("#root");
 
 export const CalendarModal = () => {
   
-  const { isDateModalOpen, onOpenDateModal, onCloseDateModal } = useUiModal();
+  const { isDateModalOpen, openDateModal, closeDateModal } = useUiModal();
 
   const [formValues, setFormValues] = useState({
     title: "Luis",
@@ -80,7 +80,7 @@ export const CalendarModal = () => {
   return (
     <Modal
       isOpen={isDateModalOpen}
-      onRequestClose={onCloseDateModal}
+      onRequestClose={closeDateModal}
       style={customStyles}
       className="modal"
       overlayClassName="modal-fondo"
