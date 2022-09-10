@@ -11,7 +11,8 @@ import "./modalStyle.css";
 import "react-datepicker/dist/react-datepicker.css";
 import { addHours, addMinutes, differenceInSeconds } from "date-fns";
 import Swal from "sweetalert2";
-import 'sweetalert2/dist/sweetalert2.min.css'
+import "sweetalert2/dist/sweetalert2.min.css";
+import { useUiModal } from "../../hooks";
 
 const customStyles = {
   content: {
@@ -27,7 +28,8 @@ const customStyles = {
 Modal.setAppElement("#root");
 
 export const CalendarModal = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  
+  const { isDateModalOpen, onOpenDateModal, onCloseDateModal } = useUiModal();
 
   const [formValues, setFormValues] = useState({
     title: "Luis",
@@ -48,10 +50,6 @@ export const CalendarModal = () => {
       ...formValues,
       [changing]: newDate,
     });
-  };
-
-  const onCloseModal = () => {
-    setIsOpen(false);
   };
 
   const onSubmit = (event) => {
@@ -81,8 +79,8 @@ export const CalendarModal = () => {
 
   return (
     <Modal
-      isOpen={isOpen}
-      onRequestClose={onCloseModal}
+      isOpen={isDateModalOpen}
+      onRequestClose={onCloseDateModal}
       style={customStyles}
       className="modal"
       overlayClassName="modal-fondo"
