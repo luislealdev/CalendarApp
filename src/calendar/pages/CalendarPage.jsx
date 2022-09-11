@@ -3,27 +3,14 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Calendar } from "react-big-calendar";
 import { getMessages, calendarLocalizer } from "../../helpers";
 
-import { addHours } from "date-fns";
 import { useState } from "react";
 import { CalendarModal } from "../components/CalendarModal";
-import { useUiModal } from "../../hooks";
+import { useCalendarStore, useUiModal } from "../../hooks";
 
-const events = [
-  {
-    title: "Luis Birthday",
-    notes: "Have to buy the cake",
-    start: new Date(),
-    end: addHours(new Date(), 2),
-    bgColor: "#fafafa",
-    user: {
-      _id: "123",
-      name: "Leal",
-    },
-  },
-];
 
 export const CalendarPage = () => {
   const { openDateModal } = useUiModal();
+  const {events} = useCalendarStore();
 
   const [lastView, setLastView] = useState(
     localStorage.getItem("lastView") || "month"
