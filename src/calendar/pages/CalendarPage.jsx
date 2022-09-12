@@ -1,4 +1,4 @@
-import { Navbar, CalendarEventBox } from "../components";
+import { Navbar, CalendarEventBox, AddNewButton } from "../components";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Calendar } from "react-big-calendar";
 import { getMessages, calendarLocalizer } from "../../helpers";
@@ -60,6 +60,7 @@ export const CalendarPage = () => {
         onView={onChangeView}
       />
       <CalendarModal />
+      <AddNewButton/>
     </>
   );
 };

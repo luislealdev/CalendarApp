@@ -28,7 +28,7 @@ const customStyles = {
 Modal.setAppElement("#root");
 
 export const CalendarModal = () => {
-  const { activeEvent } = useCalendarStore();
+  const { activeEvent, startSavingEvent } = useCalendarStore();
 
   const { isDateModalOpen, closeDateModal } = useUiModal();
 
@@ -40,11 +40,10 @@ export const CalendarModal = () => {
   });
 
   useEffect(() => {
-    if(activeEvent !== null){
-      setFormValues({...activeEvent});
+    if (activeEvent !== null) {
+      setFormValues({ ...activeEvent });
     }
-  }, [activeEvent])
-  
+  }, [activeEvent]);
 
   const onInputChange = ({ target }) => {
     setFormValues({
@@ -60,7 +59,9 @@ export const CalendarModal = () => {
     });
   };
 
-  const onSubmit = (event) => {
+  const [formSubmited, setFormSubmited] = useState(false);
+
+  const onSubmit = async (event) => {
     event.preventDefault();
     setFormSubmited(true);
 
@@ -75,9 +76,11 @@ export const CalendarModal = () => {
     }
 
     if (formValues.title.length <= 0) return;
-  };
 
-  const [formSubmited, setFormSubmited] = useState(false);
+    await startSavingEvent(formValues);
+    closeDateModal();
+    setFormSubmited(false);
+  };
 
   const titleClass = useMemo(() => {
     if (!formSubmited) return "";
