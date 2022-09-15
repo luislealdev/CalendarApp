@@ -14,7 +14,6 @@ export const useUiModal = () => {
 
   const closeDateModal = () => {
     dispatch(onCloseDateModal());
-    dispatch(startCleaningActiveEvent());
   };
 
   return {
