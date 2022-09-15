@@ -5,3 +5,10 @@
     position: fixed;
     right: 40px;
 }
+.fab-danger{
+    border-radius: 10px;
+    bottom: 40px;
+    font-size: 25px;
+    position: fixed;
+    left: 40px;
+}
