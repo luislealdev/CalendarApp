@@ -17,13 +17,13 @@ const registerForm = {
 };
 
 export const LoginPage = () => {
-  const { startLogin, errorMessage } = useAuthStore();
+  const { startLogin, startRegistering, errorMessage } = useAuthStore();
 
   useEffect(() => {
     if (errorMessage !== undefined)
       Swal.fire(
         "Error with authentication",
-        "Check email and password",
+        errorMessage,
         "error"
       );
   }, [errorMessage]);
@@ -49,16 +49,16 @@ export const LoginPage = () => {
 
   const onRegisterSubmit = (e) => {
     e.preventDefault();
-    console.log(
-      registerName,
-      registerEmail,
-      registerPassword1,
-      registerPassword2
-    );
+
+    if (registerPassword1 == registerPassword2)
+      startRegistering({
+        name: registerName,
+        email: registerEmail,
+        password: registerPassword1,
+      });
+    else
+      Swal.fire("Error with register", "Passwords are not the same", "error");
   };
-
-
-
 
   return (
     <div className="container login-container">
