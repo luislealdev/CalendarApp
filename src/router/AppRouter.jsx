@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { LoginPage } from "../auth";
 import { CalendarPage } from "../calendar";
+import { Loading } from "../components/Loading";
 import { useAuthStore } from "../hooks";
 
 export const AppRouter = () => {
@@ -11,7 +12,7 @@ export const AppRouter = () => {
     checkAuthToken();
   }, []);
 
-  if (status == "checking") return <h3>Loading...</h3>;
+  if (status == "checking") return <Loading/> ;
 
   return (
     <Routes>

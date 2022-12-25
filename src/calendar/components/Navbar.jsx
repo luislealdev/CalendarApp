@@ -1,18 +1,20 @@
-import React from 'react'
+import { useAuthStore } from "../../hooks/useAuthStore";
 
 export const Navbar = () => {
-  return (
-    <div className='navbar navbar-dark bg-dark mb-4 px-4'>
-    <span className='navbar-brand'>
-    <i className='fas fa-calendar-alt'></i>
-    &nbsp;
-    Luis Leal
-    </span>
+  const { startLogOut, user } = useAuthStore();
 
-    <button className='btn btn-outline-danger'>
-        <i className='fas fa-sing-out-alt'></i>
+  return (
+    <div className="navbar navbar-dark bg-dark mb-4 px-4">
+      <span className="navbar-brand">
+        <i className="fas fa-calendar-alt"></i>
+        &nbsp;
+        {user.name}
+      </span>
+
+      <button className="btn btn-outline-danger" onClick={startLogOut}>
+        <i className="fas fa-sing-out-alt"></i>
         <span>Salir</span>
-    </button>   
+      </button>
     </div>
-  )
-}
+  );
+};
