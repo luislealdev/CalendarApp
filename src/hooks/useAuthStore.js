@@ -40,10 +40,24 @@ export const useAuthStore = () => {
 
       dispatch(onLogin({ name: data.name, uid: data.uid }));
     } catch (error) {
-      dispatch(onLogout(error.response.data?.msg||''));
+      dispatch(onLogout(error.response.data?.msg || ""));
       setTimeout(() => {
         dispatch(onClearErrorMessage());
       }, 10);
+    }
+  };
+
+  const checkAuthToken = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) return dispatch(onLogout());
+
+    try {
+      const { data } = await calendarApi.get("auth/renew");
+      localStorage.setItem("token", data.token);
+      dispatch(onLogin({ name: data.name, uid: data.uid }));
+    } catch (error) {
+      localStorage.clear();
+      dispatch(onLogout());
     }
   };
 
@@ -53,6 +67,7 @@ export const useAuthStore = () => {
     errorMessage,
 
     startLogin,
-    startRegistering
+    startRegistering,
+    checkAuthToken,
   };
 };
